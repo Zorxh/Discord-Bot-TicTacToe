@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using DSharpPlus;
+﻿using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
+using Newtonsoft.Json;
+using System;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
+using TicTacToeDiscordBot.bin;
 
 namespace TicTacToeDiscordBot
 {
@@ -18,7 +20,7 @@ namespace TicTacToeDiscordBot
         {
             DiscordConfiguration config = new DiscordConfiguration
             {
-                Token = "", // Insert personal token here.
+                Token = GetTokenFromJsonFile(), // Insert personal token here.
                 TokenType = TokenType.Bot,
                 AutoReconnect = true,
                 LogLevel = LogLevel.Debug,
@@ -54,6 +56,25 @@ namespace TicTacToeDiscordBot
         private Task OnClientReady(ReadyEventArgs e)
         {
             return Task.CompletedTask;
+        }
+
+        // 2 methods to get the token for the bot. The file must be placed in the bin/Debug||Release/netcoreapp3.1 folder for the method to be able to find it.
+        // Or else you will need to specify your personal path for the file.
+        private string GetTokenFromTxtFile()
+        {
+            using StreamReader inputStream = new StreamReader("token.txt");
+            return inputStream.ReadToEnd();
+        }
+
+        private string GetTokenFromJsonFile()
+        {
+            using FileStream fs = File.OpenRead("token.json");
+            using StreamReader sr = new StreamReader(fs, new UTF8Encoding(false));
+            string json = sr.ReadToEnd();
+
+            JsonModel configJson = JsonConvert.DeserializeObject<JsonModel>(json);
+
+            return configJson.Token;
         }
 
     }
