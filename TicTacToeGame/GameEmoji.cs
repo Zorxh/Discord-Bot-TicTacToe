@@ -1,4 +1,5 @@
-﻿using DSharpPlus.CommandsNext;
+﻿using System.Collections.Generic;
+using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 
 namespace TicTacToeDiscordBot.TicTacToeGame
@@ -20,8 +21,8 @@ namespace TicTacToeDiscordBot.TicTacToeGame
 
         public static void InitEmoji(CommandContext ctx)
         {
-            X = BuildEmoji(ctx, ":x:");
-            O = BuildEmoji(ctx, ":blue_circle:");
+            X = BuildEmoji(ctx, ":regional_indicator_x:");
+            O = BuildEmoji(ctx, ":o2:");
             Field = BuildEmoji(ctx, ":black_large_square:");
             One = BuildEmoji(ctx, ":one:");
             Two = BuildEmoji(ctx, ":two:");
@@ -37,6 +38,16 @@ namespace TicTacToeDiscordBot.TicTacToeGame
         private static DiscordEmoji BuildEmoji(CommandContext ctx, string emoji)
         {
             return DiscordEmoji.FromName(ctx.Client, emoji);
+        }
+
+        public static List<DiscordEmoji> OneThroughNine()
+        {
+            return new List<DiscordEmoji>
+            {
+                One, Two, Three,
+                Four, Five, Six,
+                Seven, Eight, Nine
+            };
         }
     }
 }

@@ -6,7 +6,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
 {
     public class Grid
     {
-        public List<Field> GameGrid;
+        public List<Field> GameGrid = new List<Field>();
 
         public Grid(DiscordEmoji fieldEmoji)
         {
