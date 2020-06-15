@@ -1,5 +1,6 @@
 ﻿using DSharpPlus.Entities;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace TicTacToeDiscordBot.TicTacToeGame
@@ -7,6 +8,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
     public class GameElements
     {
         public bool GameActive = true;
+        public string ActivePlayer;
         public bool Multiplayer;
         public string Winner;
         public int Turn;
@@ -15,7 +17,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
         public DiscordEmbedBuilder CreatePlayField(List<Field> g)
         {
             string descriptionString = $"";
-            string winnerMessage = "";
+            string bottomMessage = $"\n\n";
             DiscordEmbedBuilder newEmbed;
 
             for (int i = 0; i < g.Count; i++)
@@ -25,14 +27,15 @@ namespace TicTacToeDiscordBot.TicTacToeGame
                     descriptionString += "\n\n";
             }
 
-            if (GameActive == false && !string.IsNullOrEmpty(Winner))
-            {
-                winnerMessage = $"\n\n{Winner} has won the game.";
-            }
+            if (GameActive)
+                bottomMessage += $"Waiting for {ActivePlayer} to make a move.";
+
+            else if (GameActive == false && !string.IsNullOrEmpty(Winner))
+                bottomMessage += $"{Winner} has won the game.";
+            
             else if (GameActive == false && string.IsNullOrEmpty(Winner))
-            {
-                winnerMessage = $"\n\nThe game resulted in a tie";
-            }
+                bottomMessage += $"The game resulted in a tie";
+            
 
             if(Multiplayer)
             { 
@@ -40,7 +43,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
                 {
                     Title = EmbedDefaults.Title,
                     Description = EmbedDefaults.PlayerAndEmoji + "\n\n" +
-                                  descriptionString + winnerMessage,
+                                  descriptionString + bottomMessage,
                     Color = DiscordColor.Green
                 };
             }
@@ -50,7 +53,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
                 {
                     Title = EmbedDefaults.Title,
                     Description = EmbedDefaults.PlayerAndEmoji + "\n\n" +
-                                  descriptionString + winnerMessage,
+                                  descriptionString + bottomMessage,
                     Color = DiscordColor.Green
                 };
             }
