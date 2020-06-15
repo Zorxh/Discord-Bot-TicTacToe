@@ -12,7 +12,7 @@ namespace TicTacToeDiscordBot
     {
         [Command("test")]
         [Description("Returns a message containing info whether the bot is running or not.")]
-        [RequireRoles(RoleCheckMode.Any, "Moderator", "Owner", "Administrator")]
+        // [RequireRoles(RoleCheckMode.Any, "Moderator", "Owner", "Administrator")]
         public async Task Test(CommandContext ctx)
         {
             await ctx.Channel.SendMessageAsync("The bot is running.");

@@ -8,6 +8,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using TicTacToeDiscordBot.bin;
+using TicTacToeDiscordBot.TicTacToeGame;
 
 namespace TicTacToeDiscordBot
 {
@@ -47,6 +48,7 @@ namespace TicTacToeDiscordBot
             Commands = Client.UseCommandsNext(commandsConfig);
 
             Commands.RegisterCommands<Commands>();
+            Commands.RegisterCommands<TicTacToe>();
 
             await Client.ConnectAsync();
 
