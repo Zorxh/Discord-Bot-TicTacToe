@@ -7,9 +7,17 @@ namespace TicTacToeDiscordBot.TicTacToeGame
 {
     public class AI
     {
-        public string Id { get; set; }
+        public ulong Id { get; set; }
         public string Name { get; set; }
         public DiscordEmoji AiEmoji { get; set; }
-        public int DifficultyLevel { get; set; }
+        public string Difficulty { get; set; }
+
+        public AI(ulong id, string name, DiscordEmoji aiEmoji, string difficulty)
+        {
+            Id = id;
+            Name = name;
+            AiEmoji = aiEmoji;
+            Difficulty = difficulty;
+        }
     }
 }

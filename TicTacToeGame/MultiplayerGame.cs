@@ -48,10 +48,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
         {
             if (GameActive)
             {
-                var interactivityp1 = ctx.Client.GetInteractivity();
-                var reactionResultp1 = await interactivityp1.WaitForReactionAsync(
-                    x => x.Message == embed &&
-                         x.User.Id == p1.Id && GameEmoji.OneThroughNine().Contains(x.Emoji)).ConfigureAwait(false);
+                InteractivityResult<MessageReactionAddEventArgs> reactionResultp1 = await InteractivityResult(p1.Id, embed);
 
                 ActivePlayer = p2.Name;
                 await RemoveChoice(embed, reactionResultp1.Result.Emoji);
@@ -62,10 +59,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
 
             if (GameActive)
             {
-                var interactivityp2 = ctx.Client.GetInteractivity();
-                var reactionResultp2 = await interactivityp2.WaitForReactionAsync(
-                    x => x.Message == embed &&
-                         x.User.Id == p2.Id && GameEmoji.OneThroughNine().Contains(x.Emoji)).ConfigureAwait(false);
+                InteractivityResult<MessageReactionAddEventArgs> reactionResultp2 = await InteractivityResult(p2.Id, embed);
 
                 ActivePlayer = p1.Name;
                 await RemoveChoice(embed, reactionResultp2.Result.Emoji);
