@@ -17,7 +17,13 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             Id = id;
             Name = name;
             AiEmoji = aiEmoji;
-            Difficulty = difficulty;
+
+            if (difficulty.Contains("easy"))
+                Difficulty = "easy";
+            else if (difficulty.Contains("medium"))
+                Difficulty = "medium";
+            else
+                Difficulty = "hard";
         }
     }
 }

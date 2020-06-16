@@ -24,7 +24,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
                 return FirstMove();
             }
 
-            if (difficulty == "hard" && turnCounter > 0)
+            if (turnCounter > 0 && difficulty == "hard")
             {
                 int hardBot = InitHardBot();
 
@@ -34,10 +34,8 @@ namespace TicTacToeDiscordBot.TicTacToeGame
                 return PlaceRandomInEmpty();
             }
 
-            return 8;
+            return -1;
         }
-
-        
 
         private int FirstMove()
         {
@@ -74,24 +72,44 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             if (blockPlayerPossible != -1)
                 return blockPlayerPossible;
 
+            int counterStrat1 = CounterStrat1();
+
+            if (counterStrat1 != -1)
+                return counterStrat1;
 
 
             return -1;
         }
 
-        /*private int CounterStrat1()
+        private int CounterStrat1()
         {
-            if (gameGrid[3 & 8].FieldValue == 1 && gameGrid[0 & 1 & 2 & 5 & 6 & 7].FieldValue == 0)
+            List<int> templateList = new List<int>();
+
+            for (int i = 0; i < gameGrid.Count; i++)
+            {
+                if (gameGrid[i].FieldValue == 1)
+                    templateList.Add(i);
+            }
+
+            if (templateList.Equals(new[] { 3, 8 }) || templateList.Equals(new[] { 0, 7 }))
                 return 6;
-        }*/
+            else if (templateList.Equals(new[] {2, 3}) || templateList.Equals(new[] { 1, 6 }))
+                return 0;
+            else if (templateList.Equals(new[] { 0, 5 }) || templateList.Equals(new[] { 1, 8 }))
+                return 2;
+            else if (templateList.Equals(new[] { 5, 6 }) || templateList.Equals(new[] { 2, 7 }))
+                return 8;
+
+            return -1;
+        }
 
         // I'm sure this can be optimized in some way
         private int CanBlockOrWin(int num)
         {
             // Horizontal row 1
-            if (gameGrid[0 & 1].FieldValue == num && gameGrid[2].FieldValue == 0 ||
-                gameGrid[0 & 2].FieldValue == num && gameGrid[2].FieldValue == num ||
-                gameGrid[0].FieldValue == 0 && gameGrid[1 & 2].FieldValue == num)
+            if (gameGrid[0].FieldValue == num && gameGrid[1].FieldValue == num && gameGrid[2].FieldValue == 0 ||
+                gameGrid[0].FieldValue == num && gameGrid[1].FieldValue == 0 && gameGrid[2].FieldValue == num ||
+                gameGrid[0].FieldValue == 0 && gameGrid[1].FieldValue == num && gameGrid[2].FieldValue == num)
             {
                 if (gameGrid[0].FieldValue == 0)
                     return 0;

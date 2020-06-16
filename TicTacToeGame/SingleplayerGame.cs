@@ -22,7 +22,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
         {
             ctx = context;
             p1 = new Player(ctx.Member.Id, ctx.Member.DisplayName, GameEmoji.X);
-            ai = new AI(aiBot.Id, aiBot.DisplayName, GameEmoji.O, difficulty);
+            ai = new AI(aiBot.Id, aiBot.DisplayName, GameEmoji.O, difficulty.ToLower());
             grid = new Grid(GameEmoji.Field);
             aiLogic = new AILogic();
         }
