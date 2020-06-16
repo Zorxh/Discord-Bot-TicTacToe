@@ -23,7 +23,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
 
             foreach (DiscordMember discordMember in dmList)
             {
-                if (discordMember.Mention == userMention && discordMember.IsBot)
+                if (discordMember.Mention.Contains(userMention) && discordMember.IsBot)
                 {
                     playerTwo = discordMember;
 
