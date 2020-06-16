@@ -32,6 +32,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
                             "Trying to play against the AI? Make sure to include the difficulty.\nFormat: \"!ttt @DiscordBot difficulty\"\nThere are currently 3 difficulties: Easy, Medium & Hard");
                     else
                     {
+                        difficulty.ToLower();
                         SingleplayerGame sp = new SingleplayerGame(ctx, playerTwo, difficulty);
                         await sp.BeginSingleplayerGame();
                     }
@@ -54,7 +55,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
         {
             List<DiscordMember> memberList = await Task.Run(() => ctx.Channel.Users.ToList());
 
-            return memberList;
+            return new List<DiscordMember>(memberList);
         }
     }
 }
