@@ -63,10 +63,9 @@ namespace TicTacToeDiscordBot.TicTacToeGame
                     CheckWinCondition(p1.Name, grid.GameGrid);
             }
 
-            await Task.Delay(1000);
-
             if (GameActive)
             {
+                await Task.Delay(1000);
                 ActivePlayer = p1.Name;
 
                 DiscordEmoji aiMove = ConvertAiMove();
@@ -90,6 +89,12 @@ namespace TicTacToeDiscordBot.TicTacToeGame
         private DiscordEmoji ConvertAiMove()
         {
             int aiMove = aiLogic.MakeMove(grid.GameGrid, ai.Difficulty, Turn);
+
+            if (aiMove == -1)
+            {
+                ctx.Channel.SendMessageAsync("The bot couldn't figure out a move.");
+                GameActive = false;
+            }
 
             return GameEmoji.OneThroughNine()[aiMove];
         }
