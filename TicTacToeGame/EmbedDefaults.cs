@@ -5,6 +5,7 @@ using System.Text;
 
 namespace TicTacToeDiscordBot.TicTacToeGame
 {
+    // Defaults for the embed in both MP and SP
     public static class EmbedDefaults
     {
         public static string Title;
@@ -21,7 +22,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
         {
             Title = $"{p1.Name} challenged the bot to a game of Tic Tac Toe!";
             PlayerAndEmoji = $"{p1.Name}: {p1.PlayerEmoji}\n" +
-                             $"{ai.Name}: {ai.AiEmoji}";
+                             $"{ai.Name}: {ai.AiEmoji}\nDifficulty: {char.ToUpper(ai.Difficulty[0]) + ai.Difficulty.Substring(1).ToLower()}";
         }
     }
 }

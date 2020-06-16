@@ -8,7 +8,6 @@ namespace TicTacToeDiscordBot.TicTacToeGame
 {
     public class MultiplayerGame : GameElements
     {
-        //private GameElements gameElements;
         private Player p1;
         private Player p2;
         private Grid grid;
@@ -21,7 +20,8 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             p2 = new Player(playerTwo.Id, playerTwo.DisplayName, GameEmoji.O);
             grid = new Grid(GameEmoji.Field);
         }
-
+        
+        // Initates multiplayer game
         public async Task BeginMultiplayerGame()
         {
             Multiplayer = true;
@@ -29,11 +29,13 @@ namespace TicTacToeDiscordBot.TicTacToeGame
 
             ActivePlayer = p1.Name;
 
+            // Creates and sends the embed that is used as the gameboard
             DiscordEmbedBuilder gameBoard = CreatePlayField(grid.GameGrid);
 
             DiscordMessage embedMessage = await ctx.Channel.SendMessageAsync(embed: gameBoard).ConfigureAwait(false);
             await AddReactions(embedMessage);
 
+            // Loops the game until the game is over.
             while (GameActive)
             {
                 await MakeMove(embedMessage);
@@ -44,6 +46,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             await embedMessage.DeleteAllReactionsAsync();
         }
 
+        // Waits for the player1 to make a move - after it will wait for player 2
         public async Task MakeMove(DiscordMessage embed)
         {
             if (GameActive)
@@ -69,6 +72,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             }
         }
 
+        // Captures the users selected emoji returns it.
         private async Task<InteractivityResult<MessageReactionAddEventArgs>> InteractivityResult(ulong id, DiscordMessage embed)
         {
             var interactivity = ctx.Client.GetInteractivity();

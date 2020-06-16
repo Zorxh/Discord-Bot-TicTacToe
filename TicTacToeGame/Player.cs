@@ -2,6 +2,7 @@
 
 namespace TicTacToeDiscordBot.TicTacToeGame
 {
+    // Model for the player class
     public class Player
     {
         public ulong Id { get; set; }

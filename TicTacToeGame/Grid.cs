@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
+using System.Collections.Generic;
 
 namespace TicTacToeDiscordBot.TicTacToeGame
 {
+    // Class for the grid Model.
     public class Grid
     {
         public List<Field> GameGrid = new List<Field>();

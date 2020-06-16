@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace TicTacToeDiscordBot.TicTacToeGame
 {
@@ -10,8 +9,9 @@ namespace TicTacToeDiscordBot.TicTacToeGame
         private List<Field> gameGrid;
         private List<int> templateList;
         private int turnCounter;
-        static Random r = new Random();
+        private static Random r = new Random();
 
+        // Will make a move based on what difficulty that's been selected by the user
         public int MakeMove(List<Field> grid, string difficulty, int turn)
         {
             // Updates the local grid & turn every time the MakeMove method is called
@@ -19,7 +19,6 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             turnCounter = turn;
 
             // Checks if it is the bots first move
-
             if (turnCounter == 0)
             {
                 return FirstMove();
@@ -49,6 +48,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             return -1;
         }
 
+        // Will iniate the bots first move
         private int FirstMove()
         {
             if (gameGrid[4].FieldValue == 0)
@@ -60,6 +60,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             }
         }
 
+        // Will place in an unoccupied spot
         private int PlaceRandomInEmpty()
         {
             int selction;
@@ -72,6 +73,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             return selction;
         }
 
+        // Initiates the easy ai that will try to win and counter the player with 70% chance
         private int InitEasyBot()
         {
             int winGamePossible = CanBlockOrWin(2);
@@ -79,10 +81,15 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             if (winGamePossible != -1)
                 return winGamePossible;
 
-            int blockPlayerPossible = CanBlockOrWin(1);
+            int blockPlayer = r.Next(1, 11);
 
-            if (blockPlayerPossible != -1)
-                return blockPlayerPossible;
+            if (blockPlayer <= 7)
+            {
+                int blockPlayerPossible = CanBlockOrWin(1);
+
+                if (blockPlayerPossible != -1)
+                    return blockPlayerPossible;
+            }
 
             int tryToWin = TryToWin();
             if (tryToWin != -1)
@@ -91,6 +98,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             return -1;
         }
 
+        // Initiates the Medium bot with a random counter strategy
         private int InitMediumBot()
         {
             int winGamePossible = CanBlockOrWin(2);
@@ -134,6 +142,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             return -1;
         }
 
+        // Initiates the Hard bot with all the counter strategies. 
         private int InitHardBot()
         {
             int winGamePossible = CanBlockOrWin(2);
@@ -349,6 +358,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             return -1;
         }
 
+        // Checks if it can either block the player or win the game going through a series of checks.
         // I'm sure this can be optimized in some way
         private int CanBlockOrWin(int num)
         {

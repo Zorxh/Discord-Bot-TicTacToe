@@ -4,6 +4,7 @@ using DSharpPlus.Entities;
 
 namespace TicTacToeDiscordBot.TicTacToeGame
 {
+    // Model for the emojies used in the game. You can easily swap out all emojies in one place.
     public static class GameEmoji
     {
         public static DiscordEmoji X;
@@ -40,6 +41,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             return DiscordEmoji.FromName(ctx.Client, emoji);
         }
 
+        // Returns a list of all the emojies.
         public static List<DiscordEmoji> OneThroughNine()
         {
             return new List<DiscordEmoji>

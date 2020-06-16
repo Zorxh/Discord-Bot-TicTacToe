@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DSharpPlus.CommandsNext;
+﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
+using System.Threading.Tasks;
 
 namespace TicTacToeDiscordBot.TicTacToeGame
 {
@@ -27,6 +23,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             aiLogic = new AILogic();
         }
 
+        // Initiates a single player game.
         public async Task BeginSingleplayerGame()
         {
             Multiplayer = false;
@@ -34,11 +31,13 @@ namespace TicTacToeDiscordBot.TicTacToeGame
 
             ActivePlayer = p1.Name;
 
+            // Creates and sends the embed that is used as the gameboard
             DiscordEmbedBuilder gameBoard = CreatePlayField(grid.GameGrid);
 
             DiscordMessage embedMessage = await ctx.Channel.SendMessageAsync(embed: gameBoard).ConfigureAwait(false);
             await AddReactions(embedMessage);
 
+            // Loops the game while the game isn't ended
             while (GameActive)
             {
                 await MakeMove(embedMessage);
@@ -49,6 +48,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             await embedMessage.DeleteAllReactionsAsync();
         }
 
+        // Takes turns to wait for the player and ai to make a move.
         public async Task MakeMove(DiscordMessage embed)
         {
             if (GameActive)
@@ -78,6 +78,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             }
         }
 
+        // Captures the users selected emoji returns it.
         private async Task<InteractivityResult<MessageReactionAddEventArgs>> InteractivityResult(ulong id, DiscordMessage embed)
         {
             var interactivity = ctx.Client.GetInteractivity();
@@ -86,6 +87,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
                      x.User.Id == id && GameEmoji.OneThroughNine().Contains(x.Emoji)).ConfigureAwait(false);
         }
 
+        // Converts the bots move to an emoji and returns it.
         private DiscordEmoji ConvertAiMove()
         {
             int aiMove = aiLogic.MakeMove(grid.GameGrid, ai.Difficulty, Turn);

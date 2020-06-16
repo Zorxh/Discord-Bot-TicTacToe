@@ -5,6 +5,7 @@ using DSharpPlus.Entities;
 
 namespace TicTacToeDiscordBot.TicTacToeGame
 {
+    // Model for the bot AI
     public class AI
     {
         public ulong Id { get; set; }

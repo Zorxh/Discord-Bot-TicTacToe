@@ -27,6 +27,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
                     descriptionString += "\n\n";
             }
 
+            // Result message
             if (GameActive)
                 bottomMessage += $"Waiting for {ActivePlayer} to make a move.";
 
@@ -36,7 +37,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             else if (GameActive == false && string.IsNullOrEmpty(Winner))
                 bottomMessage += $"The game resulted in a tie";
             
-
+            // Displays embed based on MP or SP
             if(Multiplayer)
             { 
                 newEmbed = new DiscordEmbedBuilder
@@ -61,18 +62,20 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             return newEmbed;
         }
 
-        //
+        // Adds prefixed reactions to the embed.
         public async Task AddReactions(DiscordMessage embed)
         {
             foreach(DiscordEmoji discordEmoji in GameEmoji.OneThroughNine())
                 await embed.CreateReactionAsync(discordEmoji);
         }
 
+        // Removes the emoji that has been recently selected by a player or AI
         public async Task RemoveChoice(DiscordMessage embed, DiscordEmoji demoji)
         {
             await embed.DeleteReactionsEmojiAsync(demoji).ConfigureAwait(false);
         }
 
+        // Updates the grid with Emoji and value.
         public async Task UpdateField(List<Field> grid, DiscordMessage embed, DiscordEmoji demoji, DiscordEmoji playerEmoji, int playerValue)
         {
             for (int i = 0; i < 9; i++)
@@ -87,6 +90,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             await embed.ModifyAsync(embed: new Optional<DiscordEmbed>(CreatePlayField(grid))).ConfigureAwait(false);
         }
 
+        // Checks if the player or AI has met the win conditions
         public void CheckWinCondition(string playerName, List<Field> grid)
         {
             // Horizontal row 1

@@ -1,5 +1,4 @@
-﻿using System;
-using DSharpPlus.CommandsNext;
+﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using System.Collections.Generic;
@@ -11,7 +10,8 @@ namespace TicTacToeDiscordBot.TicTacToeGame
     public class TicTacToe : BaseCommandModule
     {
         [Command("tictactoe")]
-        [Aliases("ttt", "krydsogbolle", "kob", "debugttt")]
+        [Aliases("ttt", "krydsogbolle", "kob")]
+        [Description("Initiate a game of Tic Tac Toe with your friend or the AI.\n To play against a player - type: \"!ttt @DiscordUser\"\nTo play against the ai - type: \"!ttt @DiscordBot difficulty\"")]
         public async Task TicTacToeGame(CommandContext ctx, string userMention, string difficulty = "")
         {
             DiscordMember playerTwo = null;
@@ -21,6 +21,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             await Task.WhenAny(GetMemberList(ctx));
             GameEmoji.InitEmoji(ctx);
 
+            // Checks if the member that has been @'d is a member of the channel and if it is a bot. 
             foreach (DiscordMember discordMember in dmList)
             {
                 if (discordMember.Mention.Contains(userMention) && discordMember.IsBot)
@@ -50,7 +51,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
                 await ctx.Channel.SendMessageAsync("The requested player could not be found. Please try again with another user.");
         }
 
-
+        // Returns the list of all members
         public async Task<List<DiscordMember>> GetMemberList(CommandContext ctx)
         {
             List<DiscordMember> memberList = await Task.Run(() => ctx.Channel.Users.ToList());
