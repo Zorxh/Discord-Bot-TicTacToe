@@ -2,6 +2,7 @@
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
 using System.Threading.Tasks;
+using DSharpPlus.EventArgs;
 
 namespace TicTacToeDiscordBot.TicTacToeGame
 {
@@ -50,13 +51,13 @@ namespace TicTacToeDiscordBot.TicTacToeGame
                 var interactivityp1 = ctx.Client.GetInteractivity();
                 var reactionResultp1 = await interactivityp1.WaitForReactionAsync(
                     x => x.Message == embed &&
-                         x.User == ctx.User && GameEmoji.OneThroughNine().Contains(x.Emoji)).ConfigureAwait(false);
+                         x.User.Id == p1.Id && GameEmoji.OneThroughNine().Contains(x.Emoji)).ConfigureAwait(false);
 
                 ActivePlayer = p2.Name;
                 await RemoveChoice(embed, reactionResultp1.Result.Emoji);
                 await UpdateField(grid.GameGrid, embed, reactionResultp1.Result.Emoji, p1.PlayerEmoji, 1);
                 if (Turn >= 2)
-                    CheckWinCondition(p1, grid.GameGrid);
+                    CheckWinCondition(p1.Name, grid.GameGrid);
             }
 
             if (GameActive)
@@ -70,8 +71,16 @@ namespace TicTacToeDiscordBot.TicTacToeGame
                 await RemoveChoice(embed, reactionResultp2.Result.Emoji);
                 await UpdateField(grid.GameGrid, embed, reactionResultp2.Result.Emoji, p2.PlayerEmoji, 2);
                 if (Turn >= 2)
-                    CheckWinCondition(p2, grid.GameGrid);
+                    CheckWinCondition(p2.Name, grid.GameGrid);
             }
+        }
+
+        private async Task<InteractivityResult<MessageReactionAddEventArgs>> InteractivityResult(ulong id, DiscordMessage embed)
+        {
+            var interactivity = ctx.Client.GetInteractivity();
+            return await interactivity.WaitForReactionAsync(
+                x => x.Message == embed &&
+                     x.User.Id == id && GameEmoji.OneThroughNine().Contains(x.Emoji)).ConfigureAwait(false);
         }
     }
 }

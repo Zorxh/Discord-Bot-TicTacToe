@@ -16,9 +16,4 @@
     <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00705" />
     <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00705" />
   </ItemGroup>
-  <ItemGroup>
-    <None Update="Settings.job">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 </Project>

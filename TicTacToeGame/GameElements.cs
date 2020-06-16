@@ -87,61 +87,61 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             await embed.ModifyAsync(embed: new Optional<DiscordEmbed>(CreatePlayField(grid))).ConfigureAwait(false);
         }
 
-        public void CheckWinCondition(Player p, List<Field> grid)
+        public void CheckWinCondition(string playerName, List<Field> grid)
         {
             // Horizontal row 1
             if (grid[0].FieldValue == grid[1].FieldValue && grid[1].FieldValue == grid[2].FieldValue && grid[0].FieldValue != 0)
             {
-                Winner = p.Name;
+                Winner = playerName;
                 GameActive = false;
             }
 
             // Horizontal row 2
             if (grid[3].FieldValue == grid[4].FieldValue && grid[4].FieldValue == grid[5].FieldValue && grid[3].FieldValue != 0)
             {
-                Winner = p.Name;
+                Winner = playerName;
                 GameActive = false;
             }
 
             // Horizontal row 3
             if (grid[6].FieldValue == grid[7].FieldValue && grid[7].FieldValue == grid[8].FieldValue && grid[6].FieldValue != 0)
             {
-                Winner = p.Name;
+                Winner = playerName;
                 GameActive = false;
             }
 
             // Vertical row 1
             if (grid[0].FieldValue == grid[3].FieldValue && grid[3].FieldValue == grid[6].FieldValue && grid[0].FieldValue != 0)
             {
-                Winner = p.Name;
+                Winner = playerName;
                 GameActive = false;
             }
 
             // Vertical row 2
             if (grid[1].FieldValue == grid[4].FieldValue && grid[4].FieldValue == grid[7].FieldValue && grid[1].FieldValue != 0)
             {
-                Winner = p.Name;
+                Winner = playerName;
                 GameActive = false;
             }
 
             // Vertical row 3
             if (grid[2].FieldValue == grid[5].FieldValue && grid[5].FieldValue == grid[8].FieldValue && grid[2].FieldValue != 0)
             {
-                Winner = p.Name;
+                Winner = playerName;
                 GameActive = false;
             }
 
             // Diagonal row 1
             if (grid[0].FieldValue == grid[4].FieldValue && grid[4].FieldValue == grid[8].FieldValue && grid[0].FieldValue != 0)
             {
-                Winner = p.Name;
+                Winner = playerName;
                 GameActive = false;
             }
 
             // Diagonal row 2
             if (grid[2].FieldValue == grid[4].FieldValue && grid[4].FieldValue == grid[6].FieldValue && grid[2].FieldValue != 0)
             {
-                Winner = p.Name;
+                Winner = playerName;
                 GameActive = false;
             }
 
