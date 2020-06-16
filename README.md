@@ -1,6 +1,6 @@
 # Tic Tac Toe ran by a Discord Bot
 ## Made with C# .NET Core and DSharpPlus
-This project allows the bot to run a game of Tic Tac Toe between 2 users (or an AI - coming soon).
+This project allows the bot to run a game of Tic Tac Toe between 2 users (or an AI).
 
 The command is prefixed with "!ttt @DiscordUser" or "!tictactoe @DiscordUser"
 
