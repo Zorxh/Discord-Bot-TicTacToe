@@ -1,4 +1,5 @@
-﻿using DSharpPlus.CommandsNext;
+﻿using System;
+using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using System.Collections.Generic;
@@ -10,11 +11,15 @@ namespace TicTacToeDiscordBot.TicTacToeGame
     public class TicTacToe : BaseCommandModule
     {
         [Command("tictactoe")]
-        [Aliases("ttt", "krydsogbolle", "kob")]
+        [Aliases("ttt", "krydsogbolle", "kob", "debugttt")]
         [Description("Initiate a game of Tic Tac Toe with your friend or the AI.\n To play against a player - type: \"!ttt @DiscordUser\"\nTo play against the ai - type: \"!ttt @DiscordBot difficulty\"")]
         public async Task TicTacToeGame(CommandContext ctx, string userMention, string difficulty = "")
         {
             DiscordMember playerTwo = null;
+
+            // Apparently mentions on mobile users do not include an "!" which the bot checks for.
+            if (userMention[2] != '!')
+                userMention = userMention.Insert(2, "!");
 
             List<DiscordMember> dmList = await GetMemberList(ctx);
 
@@ -24,7 +29,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             // Checks if the member that has been @'d is a member of the channel and if it is a bot. 
             foreach (DiscordMember discordMember in dmList)
             {
-                if (discordMember.Mention.Contains(userMention) && discordMember.IsBot)
+                if (discordMember.Mention == userMention && discordMember.IsBot)
                 {
                     playerTwo = discordMember;
 

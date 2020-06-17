@@ -63,14 +63,14 @@ namespace TicTacToeDiscordBot.TicTacToeGame
         // Will place in an unoccupied spot
         private int PlaceRandomInEmpty()
         {
-            int selction;
+            int selection;
             do
             {
-                selction = r.Next(gameGrid.Count);
-            } while (gameGrid[selction].FieldValue != 0);
+                selection = r.Next(gameGrid.Count);
+            } while (gameGrid[selection].FieldValue != 0);
 
 
-            return selction;
+            return selection;
         }
 
         // Initiates the easy ai that will try to win and counter the player with 70% chance
