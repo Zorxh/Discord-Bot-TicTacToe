@@ -27,8 +27,6 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             // Checks if the member that has been @'d is a member of the channel and if it is a bot. 
             foreach (DiscordMember discordMember in dmList)
             {
-                Console.WriteLine(discordMember.Mention);
-                Console.WriteLine(discordMember.Id);
                 if (userMention.Contains(discordMember.Id.ToString()) && discordMember.IsBot)
                 {
                     playerTwo = discordMember;
