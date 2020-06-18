@@ -4,6 +4,7 @@ using DSharpPlus.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TicTacToeDiscordBot.External_Dependencies;
 
 namespace TicTacToeDiscordBot.Commands
 {

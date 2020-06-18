@@ -12,5 +12,8 @@ namespace TicTacToeDiscordBot
 
         [JsonProperty("spreadsheetId")]
         public string SpreadsheetId { get; set; }
+
+        [JsonProperty("connectionString")]
+        public string ConnectionString { get; set; }
     }
 }

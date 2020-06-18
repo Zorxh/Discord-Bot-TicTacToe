@@ -90,6 +90,8 @@ namespace TicTacToeDiscordBot
                     return configJson.DebugToken;
                 case "spreadsheetId":
                     return configJson.SpreadsheetId;
+                case "connectionString":
+                    return configJson.ConnectionString;
                 default:
                     return "Nothing was found.";
             }
