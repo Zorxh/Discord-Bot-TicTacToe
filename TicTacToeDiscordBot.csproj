@@ -4,8 +4,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\netcoreapp3.1\token.json" />
-    <Content Include="bin\Release\netcoreapp3.1\token.json" />
+    <Content Include="bin\Debug\netcoreapp3.1\credentials.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Release\netcoreapp3.1\credentials.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Debug\netcoreapp3.1\token.txt" />
@@ -15,5 +19,14 @@
     <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00705" />
     <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00705" />
     <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00705" />
+    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.46.0.1988" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="bottoken.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="credentials.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

@@ -7,20 +7,26 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using TicTacToeDiscordBot.LogServers;
 using TicTacToeDiscordBot.TicTacToeGame;
 
 namespace TicTacToeDiscordBot
 {
     public class Bot
     {
-        public DiscordClient Client { get; private set; }
+        public static DiscordClient Client { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
 
         public async Task RunAsync()
         {
             DiscordConfiguration config = new DiscordConfiguration
             {
-                Token = GetTokenFromJsonFile(), // Insert personal token here.
+                Token = // Insert personal token here.
+#if DEBUG
+                    ReadFromJson("debug"), 
+#else
+                    ReadFromJson("release"),
+#endif 
                 TokenType = TokenType.Bot,
                 AutoReconnect = true,
                 LogLevel = LogLevel.Debug,
@@ -48,6 +54,7 @@ namespace TicTacToeDiscordBot
 
             Commands.RegisterCommands<Commands>();
             Commands.RegisterCommands<TicTacToe>();
+            Commands.RegisterCommands<LogServersOnline>();
 
             await Client.ConnectAsync();
 
@@ -67,16 +74,26 @@ namespace TicTacToeDiscordBot
             return inputStream.ReadToEnd();
         }
 
-        private string GetTokenFromJsonFile()
+        public static string ReadFromJson(string jsonProperty)
         {
-            using FileStream fs = File.OpenRead("token.json");
+            using FileStream fs = File.OpenRead("bottoken.json");
             using StreamReader sr = new StreamReader(fs, new UTF8Encoding(false));
             string json = sr.ReadToEnd();
 
             JsonModel configJson = JsonConvert.DeserializeObject<JsonModel>(json);
 
-            return configJson.Token;
-        }
+            switch (jsonProperty)
+            {
+                case "release":
+                    return configJson.ReleaseToken;
+                case "debug":
+                    return configJson.DebugToken;
+                case "spreadsheetId":
+                    return configJson.SpreadsheetId;
+                default:
+                    return "Nothing was found.";
+            }
 
+        }
     }
 }
