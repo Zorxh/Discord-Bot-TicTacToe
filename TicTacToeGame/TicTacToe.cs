@@ -11,15 +11,13 @@ namespace TicTacToeDiscordBot.TicTacToeGame
     public class TicTacToe : BaseCommandModule
     {
         [Command("tictactoe")]
-        [Aliases("ttt", "krydsogbolle", "kob", "debugttt")]
+        [Aliases("ttt", "krydsogbolle", "kob")]
         [Description("Initiate a game of Tic Tac Toe with your friend or the AI.\n To play against a player - type: \"!ttt @DiscordUser\"\nTo play against the ai - type: \"!ttt @DiscordBot difficulty\"")]
         public async Task TicTacToeGame(CommandContext ctx, string userMention, string difficulty = "")
         {
             DiscordMember playerTwo = null;
 
-            // Apparently mentions on mobile users do not include an "!" which the bot checks for.
-            if (userMention[2] != '!')
-                userMention = userMention.Insert(2, "!");
+            Console.WriteLine(userMention);
 
             List<DiscordMember> dmList = await GetMemberList(ctx);
 
@@ -29,7 +27,9 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             // Checks if the member that has been @'d is a member of the channel and if it is a bot. 
             foreach (DiscordMember discordMember in dmList)
             {
-                if (discordMember.Mention == userMention && discordMember.IsBot)
+                Console.WriteLine(discordMember.Mention);
+                Console.WriteLine(discordMember.Id);
+                if (userMention.Contains(discordMember.Id.ToString()) && discordMember.IsBot)
                 {
                     playerTwo = discordMember;
 
@@ -38,13 +38,13 @@ namespace TicTacToeDiscordBot.TicTacToeGame
                             "Trying to play against the AI? Make sure to include the difficulty.\nFormat: \"!ttt @DiscordBot difficulty\"\nThere are currently 3 difficulties: Easy, Medium & Hard");
                     else
                     {
-                        difficulty.ToLower();
+                        difficulty = difficulty.ToLower();
                         SingleplayerGame sp = new SingleplayerGame(ctx, playerTwo, difficulty);
                         await sp.BeginSingleplayerGame();
                     }
                 }
 
-                else if (discordMember.Mention == userMention)
+                else if (userMention.Contains(discordMember.Id.ToString()))
                 {
                     playerTwo = discordMember;
                     MultiplayerGame mp = new MultiplayerGame(ctx, playerTwo);
