@@ -7,7 +7,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using TicTacToeDiscordBot.LogServers;
+using TicTacToeDiscordBot.Commands;
 using TicTacToeDiscordBot.TicTacToeGame;
 
 namespace TicTacToeDiscordBot
@@ -52,7 +52,7 @@ namespace TicTacToeDiscordBot
 
             Commands = Client.UseCommandsNext(commandsConfig);
 
-            Commands.RegisterCommands<Commands>();
+            Commands.RegisterCommands<CommandsClass>();
             Commands.RegisterCommands<TicTacToe>();
             Commands.RegisterCommands<LogServersOnline>();
 

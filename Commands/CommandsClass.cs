@@ -1,10 +1,10 @@
-﻿using DSharpPlus.CommandsNext;
+﻿using System.Threading.Tasks;
+using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
-using System.Threading.Tasks;
 
-namespace TicTacToeDiscordBot
+namespace TicTacToeDiscordBot.Commands
 {
-    public class Commands : BaseCommandModule
+    public class CommandsClass : BaseCommandModule
     {
         [Command("test")]
         [Description("Returns a message containing info whether the bot is running or not.")]

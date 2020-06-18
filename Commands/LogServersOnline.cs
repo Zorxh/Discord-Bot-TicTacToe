@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace TicTacToeDiscordBot.LogServers
+namespace TicTacToeDiscordBot.Commands
 {
     public class LogServersOnline : BaseCommandModule
     {
@@ -20,6 +20,8 @@ namespace TicTacToeDiscordBot.LogServers
             sheets.UpdateData(servers);
 
             Console.WriteLine("List of servers have been written to owners Google Spreadsheet.");
+
+            await Task.CompletedTask;
         }
 
         public List<DiscordGuild> GetServerList()
