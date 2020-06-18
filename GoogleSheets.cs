@@ -40,12 +40,11 @@ namespace TicTacToeDiscordBot
                 HttpClientInitializer = credential,
                 ApplicationName = ApplicationName,
             });
-
-            
         }
 
         public void UpdateData(List<DiscordGuild> servers)
         {
+            ClearSpreadsheet();
             // Define request parameters.
             string range = "Server List!A1";
 
@@ -55,16 +54,23 @@ namespace TicTacToeDiscordBot
             List<object> oblist = new List<object>();
             
 
-            for (int i = 0; i < servers.Count; i++)
+            foreach (var server in servers)
             {
-                oblist.Add(servers[i].Name);
+                oblist.Add(server.Name);
             }
 
             valueRange.Values = new List<IList<object>> { oblist }; valueRange.Values = new List<IList<object>> { oblist };
             SpreadsheetsResource.ValuesResource.UpdateRequest update = SheetsService.Spreadsheets.Values.Update(valueRange, spreadsheetId, range);
             update.ValueInputOption = SpreadsheetsResource.ValuesResource.UpdateRequest.ValueInputOptionEnum.RAW;
-            UpdateValuesResponse result = update.Execute();
+            update.Execute();
+        }
 
+        private void ClearSpreadsheet()
+        {
+            string range = "Server List!A1:A255";
+            ClearValuesRequest requestBody = new ClearValuesRequest();
+            SpreadsheetsResource.ValuesResource.ClearRequest request = SheetsService.Spreadsheets.Values.Clear(requestBody, spreadsheetId, range);
+            ClearValuesResponse response = request.Execute();
         }
     }
 }

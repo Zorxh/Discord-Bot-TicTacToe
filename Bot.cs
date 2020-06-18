@@ -24,7 +24,7 @@ namespace TicTacToeDiscordBot
                 Token = // Insert personal token here.
 #if DEBUG
                     ReadFromJson("debug"), 
-#else
+#else                                               // Using this format to switch between the live bot and a bot used for debugging.
                     ReadFromJson("release"),
 #endif 
                 TokenType = TokenType.Bot,

@@ -1,6 +1,7 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,8 +18,8 @@ namespace TicTacToeDiscordBot.LogServers
 
             sheets.InitSheetsApi();
             sheets.UpdateData(servers);
-            
-            await ctx.Channel.SendMessageAsync("Server list printed to the owners Google Spreadsheet.");
+
+            Console.WriteLine("List of servers have been written to owners Google Spreadsheet.");
         }
 
         public List<DiscordGuild> GetServerList()
