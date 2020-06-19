@@ -11,7 +11,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
     public class TicTacToe : BaseCommandModule
     {
         [Command("tictactoe")]
-        [Aliases("ttt", "krydsogbolle", "kob")]
+        [Aliases("ttt", "krydsogbolle", "kob", "debugttt")]
         [Description("Initiate a game of Tic Tac Toe with your friend or the AI.\n To play against a player - type: \"!ttt @DiscordUser\"\nTo play against the ai - type: \"!ttt @DiscordBot difficulty\"")]
         public async Task TicTacToeGame(CommandContext ctx, string userMention, string difficulty = "")
         {

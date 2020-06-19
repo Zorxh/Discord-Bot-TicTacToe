@@ -12,6 +12,7 @@ namespace TicTacToeDiscordBot.TicTacToeGame
         public string Name { get; set; }
         public DiscordEmoji AiEmoji { get; set; }
         public string Difficulty { get; set; }
+        public string GameResult { get; set; }
 
         public AI(ulong id, string name, DiscordEmoji aiEmoji, string difficulty)
         {
@@ -25,6 +26,11 @@ namespace TicTacToeDiscordBot.TicTacToeGame
                 Difficulty = "medium";
             else
                 Difficulty = "hard";
+        }
+
+        public void SetGameResult(string result)
+        {
+            GameResult = result;
         }
     }
 }

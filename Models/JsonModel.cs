@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace TicTacToeDiscordBot
+namespace TicTacToeDiscordBot.Models
 {
     public class JsonModel
     {

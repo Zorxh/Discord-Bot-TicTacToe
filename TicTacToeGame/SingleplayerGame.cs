@@ -43,7 +43,8 @@ namespace TicTacToeDiscordBot.TicTacToeGame
                 await MakeMove(embedMessage);
                 Turn++;
             }
-
+            SetWinnerStatus(p1, ai);
+            RegisterInDatabase(p1, null, ai);
             await embedMessage.ModifyAsync(embed: new Optional<DiscordEmbed>(CreatePlayField(grid.GameGrid))).ConfigureAwait(false);
             await embedMessage.DeleteAllReactionsAsync();
         }
@@ -99,6 +100,25 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             }
 
             return GameEmoji.OneThroughNine()[aiMove];
+        }
+
+        private void SetWinnerStatus(Player player, AI aiPlayer)
+        {
+            if (Winner == player.Name)
+            {
+                player.SetGameResult("win");
+                aiPlayer.SetGameResult("loss");
+            }
+            else if (Winner == aiPlayer.Name)
+            {
+                aiPlayer.SetGameResult("win");
+                player.SetGameResult("loss");
+            }
+            else
+            {
+                player.SetGameResult("tie");
+                aiPlayer.SetGameResult("tie");
+            }
         }
     }
 }

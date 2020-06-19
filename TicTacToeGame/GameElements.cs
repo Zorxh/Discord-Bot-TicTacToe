@@ -1,18 +1,19 @@
 ﻿using DSharpPlus.Entities;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
+using TicTacToeDiscordBot.External_Dependencies;
 
 namespace TicTacToeDiscordBot.TicTacToeGame
 {
     public class GameElements
     {
+        ScoreDatabase sdb = new ScoreDatabase();
         public bool GameActive = true;
         public string ActivePlayer;
         public bool Multiplayer;
         public string Winner;
         public int Turn;
-
+        
         // Creates an embedded message with the game board. 
         public DiscordEmbedBuilder CreatePlayField(List<Field> g)
         {
@@ -31,12 +32,12 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             if (GameActive)
                 bottomMessage += $"Waiting for {ActivePlayer} to make a move.";
 
+            else if (GameActive == false && Winner == "tie")
+                bottomMessage += $"The game resulted in a tie";
+
             else if (GameActive == false && !string.IsNullOrEmpty(Winner))
                 bottomMessage += $"{Winner} has won the game.";
-            
-            else if (GameActive == false && string.IsNullOrEmpty(Winner))
-                bottomMessage += $"The game resulted in a tie";
-            
+
             // Displays embed based on MP or SP
             if(Multiplayer)
             { 
@@ -152,7 +153,24 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             if (grid[0].FieldValue != 0 && grid[1].FieldValue != 0 && grid[2].FieldValue != 0 &&
                 grid[3].FieldValue != 0 && grid[4].FieldValue != 0 && grid[5].FieldValue != 0 &&
                 grid[6].FieldValue != 0 && grid[7].FieldValue != 0 && grid[8].FieldValue != 0)
+            {
+                Winner = "tie";
                 GameActive = false;
+            }
+        }
+
+        public void RegisterInDatabase(Player p1, Player p2 = null, AI ai = null)
+        {
+            if (p2 == null)
+            {
+                sdb.RegisterGameData(p1, null);
+                sdb.RegisterGameData(null, ai);
+            }
+            else
+            {
+                sdb.RegisterGameData(p1, null);
+                sdb.RegisterGameData(p2, null);
+            }
         }
     }
 }

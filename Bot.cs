@@ -8,6 +8,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using TicTacToeDiscordBot.Commands;
+using TicTacToeDiscordBot.Models;
 using TicTacToeDiscordBot.TicTacToeGame;
 
 namespace TicTacToeDiscordBot
@@ -55,6 +56,7 @@ namespace TicTacToeDiscordBot
             Commands.RegisterCommands<CommandsClass>();
             Commands.RegisterCommands<TicTacToe>();
             Commands.RegisterCommands<LogServersOnline>();
+            Commands.RegisterCommands<TrackScores>();
 
             await Client.ConnectAsync();
 

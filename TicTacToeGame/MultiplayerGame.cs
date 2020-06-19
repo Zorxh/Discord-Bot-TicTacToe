@@ -42,6 +42,8 @@ namespace TicTacToeDiscordBot.TicTacToeGame
                 Turn++;
             }
 
+            SetWinnerStatus(p1, p2);
+            RegisterInDatabase(p1, p2);
             await embedMessage.ModifyAsync(embed: new Optional<DiscordEmbed>(CreatePlayField(grid.GameGrid))).ConfigureAwait(false);
             await embedMessage.DeleteAllReactionsAsync();
         }
@@ -79,6 +81,25 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             return await interactivity.WaitForReactionAsync(
                 x => x.Message == embed &&
                      x.User.Id == id && GameEmoji.OneThroughNine().Contains(x.Emoji)).ConfigureAwait(false);
+        }
+
+        private void SetWinnerStatus(Player player1, Player player2)
+        {
+            if (Winner == player1.Name)
+            {
+                player1.SetGameResult("win");
+                player2.SetGameResult("loss");
+            }
+            else if (Winner == player2.Name)
+            {
+                player2.SetGameResult("win");
+                player1.SetGameResult("loss");
+            }
+            else
+            {
+                player1.SetGameResult("tie");
+                player2.SetGameResult("tie");
+            }
         }
     }
 }

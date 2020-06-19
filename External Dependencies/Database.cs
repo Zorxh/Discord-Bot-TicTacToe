@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Data.SqlClient;
+using TicTacToeDiscordBot.Models;
 
 namespace TicTacToeDiscordBot.External_Dependencies
 {
     public class Database
     {
-        public SqlConnection connection = new SqlConnection(Bot.ReadFromJson("connectionString"));
+        public SqlConnection connection;
         public SqlCommand command;
 
         public void PrepareSql(string sqlString)
         {
+            connection = new SqlConnection(Bot.ReadFromJson("connectionString"));
+
             try
             {
                 connection.Open();
@@ -44,7 +47,7 @@ namespace TicTacToeDiscordBot.External_Dependencies
 
         public string GetId(string sqlSelect)
         {
-            command.CommandText = sqlSelect;
+            PrepareSql(sqlSelect);
             SqlDataReader sqldr = command.ExecuteReader();
 
             if (sqldr.HasRows)
@@ -57,6 +60,26 @@ namespace TicTacToeDiscordBot.External_Dependencies
 
             connection.Close();
             return null;
+        }
+
+        public PlayerInDb FetchPreviousResults(string memberId)
+        {
+            string sqlSelect = $"select * from ScoreList where userId = " + memberId;
+            PrepareSql(sqlSelect);
+            SqlDataReader sqldr = command.ExecuteReader();
+
+            if (sqldr.HasRows)
+                while (sqldr.Read())
+                {
+                    string userId = sqldr["userId"].ToString();
+                    int wins = Convert.ToInt32(sqldr["wins"].ToString());
+                    int losses = Convert.ToInt32(sqldr["losses"].ToString());
+                    int ties = Convert.ToInt32(sqldr["ties"].ToString());
+                    connection.Close();
+                    return new PlayerInDb(userId, wins, losses, ties);
+                }
+
+            return new PlayerInDb("", 0, 0, 0);
         }
     }
 }
