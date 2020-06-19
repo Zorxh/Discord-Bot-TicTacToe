@@ -32,14 +32,17 @@ namespace TicTacToeDiscordBot.TicTacToeGame
             if (GameActive)
                 bottomMessage += $"Waiting for {ActivePlayer} to make a move.";
 
-            else if (GameActive == false && Winner == "tie")
-                bottomMessage += $"The game resulted in a tie";
-
             else if (GameActive == false && !string.IsNullOrEmpty(Winner))
                 bottomMessage += $"{Winner} has won the game.";
 
+            else if (GameActive == false && string.IsNullOrEmpty(Winner))
+            {
+                Winner = "tie";
+                bottomMessage += $"The game resulted in a tie";
+            }
+
             // Displays embed based on MP or SP
-            if(Multiplayer)
+            if (Multiplayer)
             { 
                 newEmbed = new DiscordEmbedBuilder
                 {
@@ -154,7 +157,6 @@ namespace TicTacToeDiscordBot.TicTacToeGame
                 grid[3].FieldValue != 0 && grid[4].FieldValue != 0 && grid[5].FieldValue != 0 &&
                 grid[6].FieldValue != 0 && grid[7].FieldValue != 0 && grid[8].FieldValue != 0)
             {
-                Winner = "tie";
                 GameActive = false;
             }
         }
